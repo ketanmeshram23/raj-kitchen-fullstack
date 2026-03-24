@@ -6,12 +6,12 @@ const connectDB = require('./config/db');
 
 const app = express();
 
-// ─── Connect to MongoDB ───────────────────────────────────────────────────────
+// ─── Connect to MongoDB ─────────────────────────────
 connectDB();
 
-// ─── Middleware ───────────────────────────────────────────────────────────────
+// ─── Middleware ─────────────────────────────────────
 app.use(cors({
-  origin: '*', // In production: restrict to your domain
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
@@ -19,18 +19,17 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ─── Serve Static Frontend Files ──────────────────────────────────────────────
-// Serve original frontend files from the parent directory (where index.html, etc. live)
+// ─── Serve Static Files ─────────────────────────────
 app.use(express.static(path.join(__dirname, '..')));
 
-// ─── API Routes ───────────────────────────────────────────────────────────────
+// ─── API Routes ─────────────────────────────────────
 app.use('/admin', require('./routes/auth'));
 app.use('/admin', require('./routes/stats'));
 app.use('/menu', require('./routes/menu'));
 app.use('/category', require('./routes/category'));
 app.use('/review', require('./routes/review'));
 
-// ─── Admin Page Routes (serve HTML files) ────────────────────────────────────
+// ─── Admin Pages ────────────────────────────────────
 app.get('/admin-login', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'admin-login.html'));
 });
@@ -39,27 +38,40 @@ app.get('/admin-dashboard', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'admin-dashboard.html'));
 });
 
-// ─── Health Check ─────────────────────────────────────────────────────────────
+// ─── Health Check ───────────────────────────────────
 app.get('/api/health', (req, res) => {
-  res.json({ success: true, message: 'Raj Kitchen API is running 🍛', timestamp: new Date() });
+  res.json({
+    success: true,
+    message: 'Raj Kitchen API is running 🍛',
+    timestamp: new Date()
+  });
 });
 
-// ─── 404 Handler ──────────────────────────────────────────────────────────────
+// ─── Root Route (IMPORTANT) ─────────────────────────
+app.get('/', (req, res) => {
+  res.send('Raj Kitchen API is running 🚀');
+});
+
+// ─── 404 Handler ────────────────────────────────────
 app.use((req, res) => {
-  res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found.` });
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.originalUrl} not found.`
+  });
 });
 
-// ─── Global Error Handler ─────────────────────────────────────────────────────
+// ─── Error Handler ──────────────────────────────────
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err.stack);
-  res.status(500).json({ success: false, message: 'Internal server error.' });
+  res.status(500).json({
+    success: false,
+    message: 'Internal server error.'
+  });
 });
 
-// ─── Start Server ─────────────────────────────────────────────────────────────
-const PORT = process.env.PORT || 5000;
+// ─── Start Server ───────────────────────────────────
+const PORT = process.env.PORT || 5001;
+
 app.listen(PORT, () => {
-  console.log(`\n🚀 Raj Kitchen API Server running at http://localhost:${PORT}`);
-  console.log(`📋 Admin Login:     http://localhost:${PORT}/admin-login`);
-  console.log(`🎛️  Admin Dashboard: http://localhost:${PORT}/admin-dashboard`);
-  console.log(`🍛 Public Menu API: http://localhost:${PORT}/menu\n`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
