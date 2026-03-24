@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Raj Kitchen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --accent: #d97706;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-light: #64748b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8fafc;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: white;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            flex: 1;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-toggle, .back-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .lang-toggle:hover, .back-btn:hover {
+            background: #1e293b;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .menu-section {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .menu-section h2 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.75rem;
+        }
+
+        .menu-section p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        /* Contact Section with Owner Image */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 2rem;
+            align-items: start;
+            margin-top: 1.5rem;
+        }
+
+        .owner-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            flex-shrink: 0;
+        }
+
+        .owner-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .owner-info h3 {
+            color: var(--text);
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .owner-info p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            background: #f1f5f9;
+            padding: 1.2rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        .contact-info strong {
+            color: var(--primary);
+        }
+
+        .contact-info a {
+            display: block;
+            color: white;
+            background: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0.75rem 0;
+            padding: 0.6rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .contact-info a:hover {
+            background: #b45309;
+        }
+
+        /* Location Section */
+        .location-info {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .location-info iframe {
+            width: 100%;
+            height: 350px;
+            border-radius: 0.375rem;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .gallery-item {
+            background: linear-gradient(135deg, #d97706 0%, #0f172a 100%);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(217, 119, 6, 0.2);
+        }
+
+        /* Services List */
+        .services-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .services-list li {
+            padding: 0.75rem 1rem;
+            background: #f1f5f9;
+            border-left: 4px solid var(--accent);
+            margin-bottom: 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        /* Terms and Conditions */
+        .terms-content h3 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .terms-content p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* TABLET RESPONSIVE (768px and below) */
+        /* ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.75rem;
+                gap: 0.75rem;
+            }
+
+            header h1 {
+                font-size: 1.25rem;
+            }
+
+            .header-buttons {
+                gap: 0.4rem;
+            }
+
+            .lang-toggle, .back-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .container {
+                padding: 0.75rem;
+            }
+
+            .menu-section {
+                padding: 1.25rem;
+                margin-bottom: 1rem;
+            }
+
+            .menu-section h2 {
+                font-size: 1.3rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .menu-section p {
+                font-size: 0.95rem;
+                margin-bottom: 0.75rem;
+            }
+
+            /* Contact Section - Side by Side */
+            .contact-wrapper {
+                grid-template-columns: 140px 1fr;
+                gap: 1.5rem;
+                margin-top: 1rem;
+            }
+
+            .owner-image {
+                width: 140px;
+                height: 140px;
+            }
+
+            .owner-info h3 {
+                font-size: 1.1rem;
+            }
+
+            .contact-info {
+                padding: 1rem;
+            }
+
+            .contact-info p {
+                font-size: 0.9rem;
+            }
+
+            .contact-info a {
+                font-size: 0.9rem;
+                padding: 0.5rem 0.8rem;
+            }
+
+            .location-info iframe {
+                height: 300px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.75rem;
+            }
+
+            .gallery-item {
+                padding: 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .services-list li {
+                padding: 0.65rem 0.9rem;
+                margin-bottom: 0.5rem;
+                font-size: 0.95rem;
+            }
+
+            .terms-content h3 {
+                font-size: 1rem;
+                margin-top: 1.2rem;
+            }
+
+            .terms-content p {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════ */
+        /* MOBILE RESPONSIVE (480px and below) */
+        /* ═══════════════════════════════════════════════════════════════ */
+        @media (max-width: 480px) {
+            header {
+                padding: 0.6rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            header h1 {
+                font-size: 1.1rem;
+            }
+
+            .header-buttons {
+                width: 100%;
+                gap: 0.3rem;
+            }
+
+            .lang-toggle, .back-btn {
+                flex: 1;
+                padding: 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .container {
+                padding: 0.5rem;
+            }
+
+            .menu-section {
+                padding: 1rem;
+                margin-bottom: 0.75rem;
+                border-radius: 0.375rem;
+            }
+
+            .menu-section h2 {
+                font-size: 1.15rem;
+                margin-bottom: 0.6rem;
+                padding-bottom: 0.5rem;
+            }
+
+            .menu-section p {
+                font-size: 0.9rem;
+                margin-bottom: 0.6rem;
+            }
+
+            /* Contact Section - Stacked */
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-top: 1rem;
+            }
+
+            .owner-image {
+                width: 120px;
+                height: 120px;
+                margin: 0 auto;
+                display: block;
+            }
+
+            .owner-info {
+                text-align: center;
+            }
+
+            .owner-info h3 {
+                font-size: 1rem;
+            }
+
+            .owner-info p {
+                font-size: 0.85rem;
+            }
+
+            .contact-info {
+                padding: 0.9rem;
+            }
+
+            .contact-info p {
+                font-size: 0.85rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .contact-info a {
+                font-size: 0.85rem;
+                padding: 0.5rem;
+                margin: 0.5rem 0;
+            }
+
+            .location-info {
+                padding: 0.75rem;
+                margin-top: 0.75rem;
+            }
+
+            .location-info iframe {
+                height: 250px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+
+            .gallery-item {
+                padding: 1rem;
+                font-size: 0.8rem;
+                border-radius: 0.375rem;
+            }
+
+            .services-list li {
+                padding: 0.6rem 0.8rem;
+                margin-bottom: 0.4rem;
+                font-size: 0.9rem;
+            }
+
+            .terms-content h3 {
+                font-size: 0.95rem;
+                margin-top: 1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .terms-content p {
+                font-size: 0.85rem;
+                margin-bottom: 0.75rem;
+            }
+
+            footer {
+                padding: 1.5rem 0.5rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="headerTitle">Raj's Kitchen</h1>
+        <div class="header-buttons">
+            <button class="lang-toggle" id="langToggle" onclick="toggleMenuLanguage()">मराठी</button>
+            <a href="index.html" class="back-btn" id="backBtn">← Back to Order</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- About Section -->
+        <div class="menu-section">
+            <h2 id="aboutTitle">About Us</h2>
+          <p id="aboutText1"></p>
+          <p id="aboutText3">Raj’s Kitchen is a premier catering firm with an 18-year legacy of excellence, specializing in authentic Indian cuisine for weddings, corporate events, and milestone celebrations.</p>
+            <p id="aboutText2">With over 1250+ successful events catered, we pride ourselves on quality, consistency, and customer satisfaction. Our experienced team ensures every event is memorable.</p>
+        </div>
+
+        <!-- Services Section -->
+        <div class="menu-section">
+            <h2 id="servicesTitle">Services</h2>
+            <ul class="services-list" id="servicesList">
+                <li>✓ Wedding Catering</li>
+                <li>✓ Corporate Events</li>
+                <li>✓ Birthday Parties</li>
+                <li>✓ Anniversary Celebrations</li>
+                <li>✓ Customized Menus</li>
+                <li>✓ Bulk Orders</li>
+                <li>✓ Delivery Available</li>
+                <li>✓ Professional Service</li>
+            </ul>
+        </div>
+
+        <!-- Contact Section with Owner Image -->
+        <div class="menu-section">
+            <h2 id="contactTitle">Contact Us</h2>
+            <p id="contactDesc">Get in touch with us to discuss your catering needs and place an order.</p>
+            
+            <div class="contact-wrapper">
+                <!-- Owner Image (Left Side) -->
+                <div class="owner-image">
+                    <img src="img.jpeg" alt="Owner - Raj Kitchen">
+                </div>
+
+                <!-- Contact Info (Right Side) -->
+                <div class="owner-info">
+                    <h3 id="ownerName">Owner: Satish Baliram Wasnik </h3>
+                    <p id="ownerTitle">Founder of Raj's Kitchen</p>
+                    
+                    <div class="contact-info">
+                        <p id="phoneLabel"><strong>Phone:</strong></p>
+                        <a href="tel:+919370002119" id="callBtn">📞 Call Now</a>
+                        
+                        <p style="margin-top: 0.75rem;" id="whatsappLabel"><strong>WhatsApp:</strong></p>
+                        <a href="https://wa.me/919370002119" id="whatsappBtn">💬 Message on WhatsApp</a>
+                        
+                        <p style="margin-top: 0.75rem; font-size: 0.85rem;" id="numberDisplay"><strong>Number:</strong> +91 9370002119</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location Section -->
+        <div class="menu-section">
+            <h2 id="locationTitle">Location</h2>
+            <p id="locationDesc">Visit us at Raj's Kitchen - 89, Bhande Plot, Near Shankar Sai Mat, Umred Road, Nagpur-440024.</p>
+            <div class="location-info">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.7610498015233!2d79.11715281095783!3d21.122090584485104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4b923950db9eb%3A0xe58e48031faef08!2sRAJ&#39;S%20KITCHEN!5e0!3m2!1sen!2sin!4v1769843077457!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-light);" id="locationNote">For specific location details and delivery confirmation, please call or WhatsApp us.</p>
+        </div>
+
+        <!-- Terms and Conditions Section -->
+        <div class="menu-section">
+            <h2 id="termsTitle">Terms and Conditions</h2>
+            
+            <div class="terms-content" id="termsContent">
+                <h3>1. Order Acceptance</h3>
+                <p>1. Orders are accepted via WhatsApp or phone call.</p>
+
+                <h3>2. Pricing</h3>
+                <p>Prices may change without prior notice.</p>
+
+                <h3>3. Ordering and Payment</h3>
+                <p>No cancellation once order is confirmed.</p>
+
+                <h3>4. Customization</h3>
+                <p>Customization may include extra charges.</p>
+
+                <h3>5. Cancellation and Refund Policy</h3>
+                <p><strong>No Cancelation once the order is confirmed</strong></p>
+
+                <h3>6. Food Safety and Allergies</h3>
+                <p> Food safety standards are strictly followed.</p>
+
+                <h3>7. Quality Assurance</h3>
+                <p>We are not responsible for allergy issues if not informed.Quality issues must be reported within 24 hours..</p>
+                <h3>8.Delivery Charges  </h3>
+                <p>Meals will be served in food containers at no extra cost; however, delivery charges will apply separately."</p>
+            </div>
+        </div>
+
+        <!-- Gallery Section 
+        <div class="menu-section">
+            <h2 id="galleryTitle">Gallery</h2>
+            <p id="galleryDesc">Here are some highlights from our past events and catering services.</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">🎂 Wedding Events</div>
+                <div class="gallery-item">🏢 Corporate Functions</div>
+                <div class="gallery-item">🎉 Party Celebrations</div>
+                <div class="gallery-item">🍛 Authentic Cuisine</div>
+                <div class="gallery-item">👨‍🍳 Professional Team</div>
+                <div class="gallery-item">✨ Quality Service</div>
+            </div>
+        </div>-->
+    </div>
+
+    <footer>
+        <p id="footerText1">Raj Kitchen - Premium Catering Service</p>
+        <p id="footerText2">All Rights Reserved © 2025</p>
+    </footer>
+
+    <script>
+        const menuTranslations = {
+            en: {
+                headerTitle: 'Raj Kitchen',
+                aboutTitle: 'About Us',
+                //aboutText1: 'Raj Kitchen is a premium catering service specializing in authentic Indian cuisine for weddings, corporate events, and celebrations.',
+                aboutText2: 'With over 1250+ successful events catered, we pride ourselves on quality, consistency, and customer satisfaction. Our experienced team ensures every event is memorable.',
+                aboutText3: 'Raj’s Kitchen is a premier catering firm with an 18-year legacy of excellence, specializing in authentic Indian cuisine for weddings, corporate events, and milestone celebrations.',
+                servicesTitle: 'Services',
+                contactTitle: 'Contact Us',
+                contactDesc: 'Get in touch with us to discuss your catering needs and place an order.',
+                ownerName: 'Owner: Satish Baliram Wasnik',
+                ownerTitle: 'Founder of Raj\'s Kitchen',
+                phoneLabel: 'Phone:',
+                callBtn: '📞 Call Now',
+                whatsappLabel: 'WhatsApp:',
+                whatsappBtn: '💬 Message on WhatsApp',
+                locationTitle: 'Location',
+                locationDesc: 'Visit us at Raj\'s Kitchen - 89, Bhande Plot, Near Shankar Sai Mat, Umred Road, Nagpur-440024.',
+                locationNote: 'For specific location details and delivery confirmation, please call or WhatsApp us.',
+                termsTitle: 'Terms and Conditions',
+                galleryTitle: 'Gallery',
+                galleryDesc: 'Here are some highlights from our past events and catering services.',
+                footerText1: 'Raj Kitchen - Premium Catering Service',
+                footerText2: 'All Rights Reserved © 2025',
+                backBtn: '← Back to Order',
+                langButton: 'मराठी',
+            },
+            mr: {
+                headerTitle: 'राज किचन',
+                aboutTitle: 'आमच्याबद्दल',
+                //aboutText1: 'राज किचन विवाह, कॉर्पोरेट कार्यक्रम आणि उत्सवांसाठी प्रामाणिक भारतीय जेवणात विशेषज्ञता असलेली प्रीमियम केटरिंग सेवा आहे.',
+                aboutText2: '१२५०+ यशस्वी कार्यक्रमांसाठी केटरिंग केल्यानंतर, आम्ही गुणवत्ता, सुसंगतता आणि ग्राहक समाधानाचे गर्व करतो. आमची अनुभवी टीम प्रत्येक कार्यक्रम स्मरणीय बनवते.',
+                aboutText3: ' Raj\'s Kitchen चे संचालक असून त्यांना केटरिंग क्षेत्रात १८ वर्षांचा प्रदीर्घ अनुभव आहे. ग्राहकांच्या नेमक्या गरजा ओळखून त्यांना वाजवी दरात सर्वोत्तम चव आणि उच्च दर्जाची सेवा पुरवणे हीच त्यांची कामाची पद्धत आहे.',
+                servicesTitle: 'सेवाएं',
+                contactTitle: 'आमच्याशी संपर्क करा',
+                contactDesc: 'आपल्या केटरिंग गरजांवर चर्चा करण्यासाठी आणि ऑर्डर ठेवण्यासाठी आमच्याशी संपर्क साधा.',
+                ownerName: 'मालक: सतीश बळीराम वासनिक',
+                ownerTitle: 'राज किचनचे संस्थापक',
+                phoneLabel: 'फोन:',
+                callBtn: '📞 आता कॉल करा',
+                whatsappLabel: 'व्हाट्सअ्पवर:',
+                whatsappBtn: '💬 व्हाट्सअ्पवर संदेश पाठवा',
+                locationTitle: 'स्थान',
+                locationDesc: 'राज किचनला भेट द्या - 89, भांडे प्लॉट, शंकर साई मट जवळ, अमरेड रोड, नागपूर-440024.',
+                locationNote: 'विशिष्ट स्थान तपशील आणि वितरण पुष्टीसाठी कृपया आमच्याशी कॉल किंवा व्हाट्सअ्पवर संपर्क साधा.',
+                termsTitle: 'अटी आणि शर्ती',
+                galleryTitle: 'गॅलरी',
+                galleryDesc: 'आमच्या मागील कार्यक्रमांच्या आणि केटरिंग सेवांच्या काही हायलाइट्स येथे आहेत.',
+                footerText1: 'राज किचन - प्रीमियम केटरिंग सेवा',
+                footerText2: 'सर्व अधिकार राखीव © 2025',
+                backBtn: '← ऑर्डर करण्यासाठी परत जा',
+                langButton: 'English',
+            }
+        };
+
+        let menuLanguage = 'en';
+
+        function toggleMenuLanguage() {
+            menuLanguage = menuLanguage === 'en' ? 'mr' : 'en';
+            updateMenuLanguage();
+        }
+
+        function updateMenuLanguage() {
+            const trans = menuTranslations[menuLanguage];
+            
+            document.getElementById('headerTitle').textContent = trans.headerTitle;
+            document.getElementById('aboutTitle').textContent = trans.aboutTitle;
+            document.getElementById('aboutText1').textContent = trans.aboutText1;
+            document.getElementById('aboutText2').textContent = trans.aboutText2;
+            document.getElementById('aboutText3').textContent = trans.aboutText3;
+            document.getElementById('servicesTitle').textContent = trans.servicesTitle;
+            document.getElementById('contactTitle').textContent = trans.contactTitle;
+            document.getElementById('contactDesc').textContent = trans.contactDesc;
+            document.getElementById('ownerName').textContent = trans.ownerName;
+            document.getElementById('ownerTitle').textContent = trans.ownerTitle;
+            document.getElementById('phoneLabel').innerHTML = '<strong>' + trans.phoneLabel + '</strong>';
+            document.getElementById('callBtn').textContent = trans.callBtn;
+            document.getElementById('whatsappLabel').innerHTML = '<strong>' + trans.whatsappLabel + '</strong>';
+            document.getElementById('whatsappBtn').textContent = trans.whatsappBtn;
+            document.getElementById('locationTitle').textContent = trans.locationTitle;
+            document.getElementById('locationDesc').textContent = trans.locationDesc;
+            document.getElementById('locationNote').textContent = trans.locationNote;
+            document.getElementById('termsTitle').textContent = trans.termsTitle;
+            document.getElementById('galleryTitle').textContent = trans.galleryTitle;
+            document.getElementById('galleryDesc').textContent = trans.galleryDesc;
+            document.getElementById('footerText1').textContent = trans.footerText1;
+            document.getElementById('footerText2').textContent = trans.footerText2;
+            document.getElementById('backBtn').textContent = trans.backBtn;
+            document.getElementById('langToggle').textContent = trans.langButton;
+        }
+    </script>
+</body>
+</html>

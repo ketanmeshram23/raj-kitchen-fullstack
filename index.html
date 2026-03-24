@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Google verification-->
+    <meta name="google-site-verification" content="DZRVGLtwG4NKN2RjFCBC2KLq8BMEKbVKMYVtAUq0LWY" />
+    <title>Raj's Kitchen - Premium Catering</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="header-left">
+                    <div class="logo-circle">
+                        <img src="img.png" alt="Logo">
+                    </div>
+                    <div class="brand-section">
+                        <h1>Raj's Kitchen</h1>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="lang-toggle" id="langToggle" onclick="toggleLanguage()">
+                        मराठी
+                    </button>
+                    <button class="menu-toggle" onclick="toggleMenu()">
+                        ☰
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="scroll-tagline" id="scrollTagline">
+        <div class="container">
+            <p class="tagline-text" id="taglineText">""The aroma you love, just one Whatsapp away.."</p>
+            <!--<p class="tagline-subtitle" id="taglineSubtitle">These are estimates. You can increase or decrease any item as you like.</p>-->
+        </div>
+    </div>
+
+    <main id="main">
+        <div class="people-selector">
+            <p id="peopleText">How many people are you catering for?</p>
+            <div class="people-buttons">
+                <button class="people-btn active" data-people="20" onclick="setPeople(20)">20 People</button>
+                <button class="people-btn" data-people="40" onclick="setPeople(40)">40 People</button>
+                <button class="people-btn" data-people="50" onclick="setPeople(50)">50 People</button>
+                <p class="tagline-subtitle" id="taglineSubtitle">"These recommendations are our estimates; feel free to adjust any quantities as you like."</p>
+            </div>
+        </div>
+
+        <div class="category-tabs" id="categoryTabs"></div>
+
+        <div class="menu-grid" id="menuGrid"></div>
+    </main>
+
+    <!-- ── Customer Reviews ───────────────────────────────────────────────── -->
+    <section id="reviewSection" style="
+      max-width:900px;margin:1.5rem auto;padding:0 1rem;
+      display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+    ">
+      <!-- Submit Form -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:0.75rem;padding:1.5rem;">
+        <h3 style="font-size:1.1rem;color:var(--primary);margin-bottom:1rem;">⭐ Leave a Review</h3>
+
+        <div id="reviewAlert" style="display:none;padding:0.65rem 1rem;border-radius:0.5rem;font-size:0.875rem;margin-bottom:0.9rem;"></div>
+
+        <div style="margin-bottom:0.85rem;">
+          <label style="display:block;font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">Your Name *</label>
+          <input id="rvName" type="text" placeholder="e.g. Priya Sharma"
+            style="width:100%;padding:0.6rem 0.85rem;border:1.5px solid var(--border);border-radius:0.5rem;font-size:0.9rem;font-family:inherit;outline:none;" />
+        </div>
+
+        <div style="margin-bottom:0.85rem;">
+          <label style="display:block;font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:0.4rem;">Rating *</label>
+          <div id="starPicker" style="display:flex;gap:0.35rem;">
+            <span class="rv-star" data-v="1" onclick="setRating(1)" style="font-size:1.6rem;cursor:pointer;color:#cbd5e1;transition:color .15s;">★</span>
+            <span class="rv-star" data-v="2" onclick="setRating(2)" style="font-size:1.6rem;cursor:pointer;color:#cbd5e1;transition:color .15s;">★</span>
+            <span class="rv-star" data-v="3" onclick="setRating(3)" style="font-size:1.6rem;cursor:pointer;color:#cbd5e1;transition:color .15s;">★</span>
+            <span class="rv-star" data-v="4" onclick="setRating(4)" style="font-size:1.6rem;cursor:pointer;color:#cbd5e1;transition:color .15s;">★</span>
+            <span class="rv-star" data-v="5" onclick="setRating(5)" style="font-size:1.6rem;cursor:pointer;color:#cbd5e1;transition:color .15s;">★</span>
+          </div>
+          <input type="hidden" id="rvRating" value="0" />
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <label style="display:block;font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:0.3rem;">Message *</label>
+          <textarea id="rvMessage" rows="3" placeholder="Tell us about your experience..."
+            style="width:100%;padding:0.6rem 0.85rem;border:1.5px solid var(--border);border-radius:0.5rem;font-size:0.9rem;font-family:inherit;resize:vertical;outline:none;"></textarea>
+        </div>
+
+        <button onclick="submitReview()" id="rvBtn"
+          style="width:100%;padding:0.7rem;background:var(--accent);color:#fff;border:none;border-radius:0.5rem;font-size:0.9rem;font-weight:700;cursor:pointer;">
+          Submit Review
+        </button>
+      </div>
+
+      <!-- Recent Reviews -->
+      <div style="background:#fff;border:1px solid var(--border);border-radius:0.75rem;padding:1.5rem;overflow:hidden;">
+        <h3 style="font-size:1.1rem;color:var(--primary);margin-bottom:1rem;">💬 What Customers Say</h3>
+        <div id="reviewsList" style="display:flex;flex-direction:column;gap:0.85rem;max-height:320px;overflow-y:auto;">
+          <p style="color:var(--text-light);font-size:0.875rem;">Loading reviews...</p>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      @media (max-width: 640px) {
+        #reviewSection { grid-template-columns: 1fr !important; }
+      }
+    </style>
+    <script>
+      // ── Review widget ──────────────────────────────────────────────────────
+      let _rvRating = 0;
+
+      function setRating(val) {
+        _rvRating = val;
+        document.getElementById('rvRating').value = val;
+        document.querySelectorAll('.rv-star').forEach(s => {
+          s.style.color = parseInt(s.dataset.v) <= val ? '#d97706' : '#cbd5e1';
+        });
+      }
+
+      function showRvAlert(msg, type) {
+        const el = document.getElementById('reviewAlert');
+        el.textContent = msg;
+        el.style.display = 'block';
+        el.style.background = type === 'success' ? '#f0fdf4' : '#fef2f2';
+        el.style.color = type === 'success' ? '#16a34a' : '#dc2626';
+        el.style.border = `1px solid ${type === 'success' ? '#bbf7d0' : '#fecaca'}`;
+      }
+
+      async function submitReview() {
+        const name = document.getElementById('rvName').value.trim();
+        const rating = parseInt(document.getElementById('rvRating').value);
+        const message = document.getElementById('rvMessage').value.trim();
+
+        if (!name) return showRvAlert('Please enter your name.', 'error');
+        if (!rating) return showRvAlert('Please select a rating.', 'error');
+        if (!message) return showRvAlert('Please write a message.', 'error');
+
+        const btn = document.getElementById('rvBtn');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        try {
+          const res = await fetch('/review/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, rating, message }),
+          });
+          const data = await res.json();
+          if (data.success) {
+            showRvAlert('Thank you for your review! 🙏', 'success');
+            document.getElementById('rvName').value = '';
+            document.getElementById('rvMessage').value = '';
+            setRating(0);
+            loadRecentReviews();
+          } else {
+            showRvAlert(data.message || 'Submission failed.', 'error');
+          }
+        } catch {
+          showRvAlert('Could not reach server.', 'error');
+        }
+
+        btn.disabled = false;
+        btn.textContent = 'Submit Review';
+      }
+
+      async function loadRecentReviews() {
+        try {
+          const res = await fetch('/review/all');
+          const data = await res.json();
+          const container = document.getElementById('reviewsList');
+
+          if (!data.success || data.data.length === 0) {
+            container.innerHTML = '<p style="color:var(--text-light);font-size:0.875rem;">No reviews yet. Be the first!</p>';
+            return;
+          }
+
+          const stars = n => '★'.repeat(n) + '☆'.repeat(5 - n);
+
+          container.innerHTML = data.data.slice(0, 6).map(r => `
+            <div style="border-bottom:1px solid var(--border);padding-bottom:0.75rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.2rem;">
+                <strong style="font-size:0.875rem;color:var(--primary);">${r.name.replace(/</g,'&lt;')}</strong>
+                <span style="color:#d97706;letter-spacing:1px;font-size:0.9rem;">${stars(r.rating)}</span>
+              </div>
+              <p style="font-size:0.85rem;color:var(--text-light);line-height:1.5;">${r.message.replace(/</g,'&lt;')}</p>
+            </div>
+          `).join('');
+        } catch { /* silent — reviews section is non-critical */ }
+      }
+
+      document.addEventListener('DOMContentLoaded', loadRecentReviews);
+    </script>
+
+    <div class="cart-bar" id="cartBar">
+        <div class="cart-bar-content">
+            <button class="cart-bar-header" id="cartBarHeader" onclick="toggleCart()">
+                <div class="cart-items-count">
+                    🛒 <span id="cartCount">0 items</span>
+                </div>
+                <div class="cart-totals">
+                    <span class="cart-total-price" id="cartTotal">₹0</span>
+                    <span class="cart-expand-btn" id="expandBtn">▼</span>
+                </div>
+            </button>
+
+            <div class="cart-summary" id="cartSummary"></div>
+
+            <div class="view-cart-btn-container">
+                <button class="view-cart-btn" onclick="toggleCart()">View Cart</button>
+            </div>
+
+            <button class="whatsapp-btn" id="whatsappBtn" onclick="handleWhatsAppOrder()">
+                Order on WhatsApp • <span id="whatsappTotal">₹0</span>
+            </button>
+
+            <!--<button class="call-btn" id="callBtn" onclick="handleCall()">
+                📞 Call to Confirm
+            </button>
+          -->
+        </div>
+    </div>
+
+    <div class="empty-cart" id="emptyCart">Select items to get started →</div>
+
+    <script src="script.js"></script>
+
+    <!-- Floating Call Button -->
+    <a href="tel:9370002119" aria-label="Call Raj's Kitchen"
+       style="position:fixed;bottom:5.75rem;right:1.25rem;z-index:9999;width:54px;height:54px;background:#0F172A;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(22,163,74,0.4);text-decoration:none;font-size:1.35rem;transition:background 0.2s,transform 0.2s,box-shadow 0.2s;"
+       onmouseover="this.style.background='#15803d';this.style.transform='scale(1.1)';this.style.boxShadow='0 6px 22px rgba(22,163,74,0.5)'"
+       onmouseout="this.style.background='#16a34a';this.style.transform='scale(1)';this.style.boxShadow='0 4px 16px rgba(22,163,74,0.4)'">
+      📞
+    </a>
+</body>
+</html>
