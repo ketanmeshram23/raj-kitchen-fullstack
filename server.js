@@ -4,25 +4,18 @@ const connectDB = require('./config/db');
 
 const app = express();
 
-// 🔥 ROOT FIRST (must respond instantly)
+connectDB();
+
 app.get('/', (req, res) => {
-  res.status(200).send('🚀 Server is LIVE');
+  res.send('🚀 Server is LIVE');
 });
 
 app.get('/api/health', (req, res) => {
   res.json({ status: "ok" });
 });
 
-// 🔥 START SERVER FIRST (IMPORTANT)
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, '0.0.0.0', async () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-
-  // 🔥 CONNECT DB AFTER SERVER START
-  try {
-    await connectDB();
-  } catch (err) {
-    console.error("DB error:", err);
-  }
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
