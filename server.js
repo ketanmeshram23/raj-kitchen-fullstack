@@ -4,18 +4,23 @@ const connectDB = require('./config/db');
 
 const app = express();
 
+// Connect DB
 connectDB();
 
+// IMPORTANT: Root route
 app.get('/', (req, res) => {
-  res.send('🚀 Server is LIVE');
+  res.send('🚀 Raj Kitchen Backend is LIVE');
 });
 
+// Health route (Render uses this sometimes)
 app.get('/api/health', (req, res) => {
-  res.json({ status: "ok" });
+  res.status(200).json({ status: "ok" });
 });
 
-const PORT = process.env.PORT || 5000;
+// VERY IMPORTANT
+const PORT = process.env.PORT || 10000;
 
+// Bind correctly
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
