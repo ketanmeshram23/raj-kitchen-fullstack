@@ -192,7 +192,7 @@
 </div>
 
 <script>
-  const API_BASE = window.location.origin;
+ const API_BASE = "https://raj-kitchen-fullstack.onrender.com";
 
   // Redirect if already logged in
   const existingToken = localStorage.getItem('rk_admin_token');
@@ -251,7 +251,7 @@
         localStorage.setItem('rk_admin_token', data.token);
         localStorage.setItem('rk_admin_user', JSON.stringify(data.admin));
         showAlert('Login successful! Redirecting...', 'success');
-        setTimeout(() => { window.location.href = '/admin-dashboard'; }, 800);
+        setTimeout(() => { window.location.href = '/admin-dashboard.html'; }, 800);
       } else {
         showAlert(data.message || 'Invalid credentials.', 'error');
         setLoading(false);
