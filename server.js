@@ -7,7 +7,9 @@ const connectDB = require('./config/db');
 const app = express();
 
 // ─── Connect to MongoDB ─────────────────────────────
-connectDB();
+connectDB().catch(err => {
+  console.error("DB connection failed:", err);
+});
 
 // ─── Middleware ─────────────────────────────────────
 app.use(cors({
@@ -19,8 +21,8 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ─── Serve Static Files ─────────────────────────────
-app.use(express.static(path.join(__dirname, '..')));
+// ─── Serve Static Files (FIXED) ─────────────────────
+app.use(express.static(__dirname));
 
 // ─── API Routes ─────────────────────────────────────
 app.use('/admin', require('./routes/auth'));
@@ -31,11 +33,11 @@ app.use('/review', require('./routes/review'));
 
 // ─── Admin Pages ────────────────────────────────────
 app.get('/admin-login', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'admin-login.html'));
+  res.sendFile(path.join(__dirname, 'admin-login.html'));
 });
 
 app.get('/admin-dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'admin-dashboard.html'));
+  res.sendFile(path.join(__dirname, 'admin-dashboard.html'));
 });
 
 // ─── Health Check ───────────────────────────────────
@@ -49,7 +51,7 @@ app.get('/api/health', (req, res) => {
 
 // ─── Root Route (IMPORTANT) ─────────────────────────
 app.get('/', (req, res) => {
-  res.send('Raj Kitchen API is running 🚀');
+  res.status(200).send('Server is live 🚀');
 });
 
 // ─── 404 Handler ────────────────────────────────────
@@ -70,7 +72,7 @@ app.use((err, req, res, next) => {
 });
 
 // ─── Start Server ───────────────────────────────────
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
