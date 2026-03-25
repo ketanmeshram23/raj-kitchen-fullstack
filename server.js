@@ -7,6 +7,7 @@ const app = express();
 connectDB();
 
 // root route
+app.use(express.json());
 app.get('/', (req, res) => {
   res.send('🚀 Raj Kitchen Backend is LIVE');
 });
