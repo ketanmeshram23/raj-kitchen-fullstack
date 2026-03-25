@@ -5,7 +5,6 @@ const connectDB = require('./config/db');
 const app = express();
 
 app.use(express.json());
-app.set('trust proxy', 1);
 
 // health
 app.get('/api/health', (req, res) => {
@@ -14,6 +13,11 @@ app.get('/api/health', (req, res) => {
 
 // root
 app.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
+
+// 🚨 CATCH ALL (FINAL FIX)
+app.get('*', (req, res) => {
   res.status(200).send('OK');
 });
 
