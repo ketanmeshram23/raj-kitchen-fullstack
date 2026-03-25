@@ -635,3 +635,27 @@ async function initWithAPI() {
 }
 
 document.addEventListener('DOMContentLoaded', initWithAPI);
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("https://raj-kitchen-fullstack.onrender.com/api/menu")
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+
+      const container = document.getElementById("menuGrid");
+
+      if (!container) return;
+
+      container.innerHTML = "";
+
+      data.forEach(item => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>₹${item.price}</p>
+        `;
+        container.appendChild(div);
+      });
+    })
+    .catch(err => console.log(err));
+});
