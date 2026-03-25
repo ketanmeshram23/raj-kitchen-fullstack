@@ -11,14 +11,9 @@ app.get('/api/health', (req, res) => {
   res.status(200).send('OK');
 });
 
-// root
+// root (change message here 👇)
 app.get('/', (req, res) => {
-  res.status(200).send('OK');
-});
-
-// 🚨 CATCH ALL (FINAL FIX)
-app.get('*', (req, res) => {
-  res.status(200).send('OK');
+  res.send('🚀 Raj Kitchen Backend is LIVE');
 });
 
 const PORT = process.env.PORT || 10000;
