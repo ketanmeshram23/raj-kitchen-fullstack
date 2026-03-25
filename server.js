@@ -5,23 +5,23 @@ const connectDB = require('./config/db');
 const app = express();
 
 app.use(express.json());
+app.set('trust proxy', 1);
 
-// ✅ HEALTH FIRST
+// health
 app.get('/api/health', (req, res) => {
   res.status(200).send('OK');
 });
 
-// ✅ ROOT
+// root
 app.get('/', (req, res) => {
   res.status(200).send('OK');
 });
 
 const PORT = process.env.PORT || 10000;
 
-// ✅ START SERVER FIRST
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// ✅ THEN CONNECT DB (NON-BLOCKING)
+// DB after
 connectDB().catch(err => console.log(err));
