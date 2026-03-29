@@ -636,3 +636,30 @@ async function initWithAPI() {
 }
 
 document.addEventListener('DOMContentLoaded', initWithAPI);
+async function submitReview() {
+    const name = document.getElementById("rvName").value;
+    const message = document.getElementById("rvMsg").value;
+    const rating = 5;
+
+    try {
+        const res = awaitfetch(`${BASE_URL}/api/review/add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, rating, message })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            alert("Review submitted ✅");
+        } else {
+            alert("Failed to submit review ❌");
+        }
+
+    } catch (err) {
+        console.error(err);
+        alert("Could not reach server ❌");
+    }
+}

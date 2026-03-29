@@ -25,11 +25,9 @@ app.get('/', (req, res) => {
 res.send('🚀 Raj Kitchen Backend is LIVE');
 });
 
-// ❗ KEEP THIS ALWAYS LAST
 app.use((req, res) => {
-res.status(200).send('OK');
+  res.status(404).send('Not Found');
 });
-
 // port
 const PORT = process.env.PORT || 10000;
 
