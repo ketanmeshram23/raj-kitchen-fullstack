@@ -693,5 +693,25 @@
             document.getElementById('langToggle').textContent = trans.langButton;
         }
     </script>
+    <div style="padding:20px;">
+  <h3>Leave a Review</h3>
+
+  <input 
+    type="text" 
+    id="rvName" 
+    placeholder="Your Name" 
+    style="width:100%; padding:10px; margin-bottom:10px;"
+  />
+
+  <textarea 
+    id="rvMsg" 
+    placeholder="Your Message" 
+    style="width:100%; padding:10px; margin-bottom:10px;"
+  ></textarea>
+
+  <button onclick="submitReview()" style="padding:10px 20px;">
+    Submit Review
+  </button>
+</div>
 </body>
 </html>

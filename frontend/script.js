@@ -638,7 +638,7 @@ async function initWithAPI() {
 document.addEventListener('DOMContentLoaded', initWithAPI);
 async function submitReview() {
     const name = document.getElementById("rvName").value;
-    const message = document.getElementById("rvMsg").value;
+   const message =document.getElementById("rvMsg").value;
     const rating = 5;
 
     try {
